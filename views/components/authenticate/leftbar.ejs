@@ -1,0 +1,37 @@
+<div class="leftbar">
+   <i class="fa fa-bars simbolo-menu"></i>
+   <div class="parts">
+      <div class="part">
+         <a href="/home">
+            <i class="fas fa-home"></i>
+            <p>Home</p>
+         </a>
+      </div>
+      <div class="part">
+         <a href="/populars">
+            <i class="fas fa-user-friends"></i>
+            <p>Populares</p>
+         </a>
+      </div>
+      <div class="part">
+         <a href="/trends">
+            <i class="fas fa-fire"></i>
+            <p>Tendencias</p>
+         </a>
+      </div>
+      <div class="part">
+         <div class="newpost" onclick="newPostLayout()">
+            <i class="fas fa-plus"></i>
+            <p>Nueva publicacion</p>
+         </div>
+      </div>
+      <div class="part">
+         <%- include('profile', { user }) %>
+         <div id="profile_Submenu" class="hide">
+            <a href="/auth/logout"><i class="fas fa-sign-out-alt"></i><p>Cerrar sesion</p></a>
+            <a href="/profile"><i class="fas fa-user"></i><p>Perfil</p></a>
+         </div>
+      </div>
+   </div>
+</div>
+<div class="sint"></div>

@@ -1,0 +1,12 @@
+<div class="post" onclick="openPost()">
+   <div class="data">
+      <img src="<%= user.avatar %>" alt="" class="userAvatar">
+      <% if(user.displayName.length > 12) { %>
+         <p class="displayName"><%= user.displayName.slice(0, 12) %>..</p>
+      <% } else { %>
+         <p class="displayName"><%= user.displayName %></p>
+      <% } %>
+      <a class="username" href="/u/<%= user.username %>">@<%= user.username %></a>
+   </div>
+   <span class="content" id="post" readonly="true" rows="auto"><%= content %></span>
+</div>

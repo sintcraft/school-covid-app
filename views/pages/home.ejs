@@ -1,0 +1,29 @@
+<%- include('../components/default/head') %>
+<link rel="stylesheet" href="styles/home.css">
+<link rel="stylesheet" href="styles/mainAuthenticate.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+</head>
+<div class="conteiner">
+   <%- include('../components/authenticate/leftbar', {user}) %>
+   <div class="title">
+      <p>Home</p>
+   </div>
+   <div id="newPost">
+      <div class="userdata">
+         <img src="<%= user.avatar %>" alt="" class="userAvatar">
+      </div>
+      <textarea name="" id="post-content" cols="25" rows="1" oninput="onPostUpdate()" placeholder="Que piensas?"></textarea>
+      <button onclick="sendPost()"><i class="fas fa-paper-plane"></i>Publicar</button>
+      <div id="errorBoxPost"></div>
+   </div>
+   <div class="" id="back" onclick="clearPostLayout()"></div>
+   <div class="posts" id="posts">
+   </div>
+   <div class="loader"></div>
+</div>
+
+<script src="socket.io/socket.io.js"></script>
+<script src="js/home.js"></script>
+<script src="js/mainAuthenticate.js"></script>

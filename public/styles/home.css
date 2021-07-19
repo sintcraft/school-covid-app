@@ -1,0 +1,172 @@
+body{
+   margin: 0;
+}
+.conteiner{
+   width: 79%;
+   position: absolute;
+   left: 21%;
+}
+.title{
+   width: 49.5%;
+   font-size: 2em;
+   height: 1.5em;
+   border: #ddd 1px solid;
+   z-index: 100;
+   position: fixed;
+   background: #fff;
+}
+.title p{
+   position: relative;
+   left: 1em;
+   top: 0.15em;
+   margin: 0;
+   display: inline;
+   font-family: 'Roboto', sans-serif;
+}
+
+#newPost{
+   position: relative;
+   width: 60%;
+   border: #ddd 1px solid;
+   padding: 1em;
+   transition: .5s;
+}
+
+#newPost .userdata img {
+   position: relative;
+   width: 3.5em;
+   border-radius: 50%;
+   top: 3em;
+}
+
+#post-content{
+   resize: none;
+   border: 0;
+   display: inline;
+   width: 90%;
+   position: relative;
+   font-size: 2em;
+   left: 10%;
+}
+
+#post-content:focus {
+   outline:none;
+}
+
+#newPost button{
+   background: #0a0;
+   color: #fff;
+   border: none;
+   text-decoration: none;
+   padding: 1em 2em;
+   position: relative;
+   top: .5em;
+   left: 82%;
+}
+
+#newPost button i {
+   margin-right: 1em;
+}
+
+.posts{
+   border-right: #ddd 1px solid;
+}
+
+.post{
+   width: 60%;
+   padding: 1.4%;
+   font-family: 'Roboto', sans-serif;
+   border-bottom: #ddd 1px solid;
+   border-right: #ddd 1px solid;
+   padding-top: 2em;
+}
+.postNow {
+   animation: newPost .5s;
+}
+
+.post .data .userAvatar{
+   width: 3em;
+   border-radius: 50%;
+}
+
+.post .data .displayName{
+   display: inline;
+   font-size: 1.2em;
+   position: relative;
+   bottom: .9em;
+   left: .5em;
+}
+.post .data .username{
+   display: inline;
+   margin: 0;
+   font-size: .9em;
+   position: relative;
+   bottom: 1.25em;
+   left: 1em;
+   color: #ccc;
+}
+.post .data i{
+   display: inline;
+   margin: 0;
+   font-size: .5em;
+   position: relative;
+   bottom: 2.4em;
+   left: 1.8em;
+   color: #ccc;
+}
+.post .data .timeStap{
+   display: inline;
+   margin: 0;
+   font-size: .9em;
+   position: relative;
+   bottom: 1.2em;
+   left: 1em;
+   color: #ccc;
+}
+.post .content{
+   position: relative;
+   resize: none;
+   border: none;
+   text-align: left;
+   left: 4em;
+   bottom: 1.2em;
+   margin: 0;
+   font-size: 1.2em;
+}
+.post .content:focus {
+   outline:none;
+}
+
+@keyframes newPost {
+   0% {
+      transform: rotateX(90deg);
+   }
+   100% {
+      transform: rotateX(0deg);
+   }
+}
+
+.loader {
+   width: 7em;
+   height: 7em;
+   position: relative;
+   top: 25vh;
+   left: 25%;
+   border-radius: 50%;
+   border: #fff .3em solid;
+   border-top: #0a0 .3em solid;
+   border-right: #0a0 .3em solid;
+   animation: loader 1.5s infinite linear;
+}
+@keyframes loader {
+   0% {
+      transform: rotate(0deg) scale(1);
+   }
+   50%{
+      transform: rotate(180deg) scale(.95);
+   }
+   100% {
+      transform: rotate(360deg) scale(1);
+   }
+}
+

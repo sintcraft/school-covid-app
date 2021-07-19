@@ -22,9 +22,10 @@ module.exports = () => {
       async (accessToken, refreshToken, profile, done) => {
          let user = await User.findOne({'userId': profile.id})
          if(!user) {
+            usersCount = await User.find()
             user = new User()
             user.userId = profile.id;
-            user.username = profile.id;
+            user.username = 'user_0' + usersCount.length;
             user.displayName = profile.displayName;
             user.avatar = profile.photos[0].value;
             await user.save();
