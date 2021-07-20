@@ -14,11 +14,17 @@ module.exports = {
                socket.emit('errorPost', { message: 'Invalid post' })
                return
             };
-            let post = new Posts()
             post.content = content
             post.authorId = socket.request.user.userId
             post.timeStamp = new Date().getTime()
-            await post.save()            
+            await post.save()
+            socket.broadcast.emit('newPost', {
+               content: post.content,
+               pdisplayName: socket.request.user.displayName,
+               pusername: socket.request.user.username,
+               pavatar: socket.request.user.avatar,
+               plikes: 0,
+            })
          })
       });
    }

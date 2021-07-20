@@ -4,6 +4,7 @@ const socket = io();
 //global variables
 var lastPostTime = 1826660443711
 var lastId = 0;
+var loadPostsTimeout = false;
 
 
 // credentians
@@ -23,11 +24,19 @@ socket.on('credentials', (data) => {
    logros = data.logros;
 });
 
+socket.on('newPost', (data) =>{
+   console.log(data);
+   insertPost({
+      content: data.content,
+      pdisplayName: data.pdisplayName,
+      pusername: data.pusername,
+      pavatar: data.pavatar,
+   })
+})
+
 const onPostUpdate = () => {
    let post_content = document.getElementById('post-content');
-   let rows = post_content.value.split('\n')
-   if(rows.length < 1) return post_content.rows = 1;
-   post_content.rows = rows.length;
+   post_content.rows = resolveRowsNumber(post_content.value, 44);
 }
 
 const sendPost = () => {
@@ -77,6 +86,16 @@ function timeDifference(current, previous) {
       return 'hace ' + Math.round(elapsed/msPerYear ) + ' años';   
    }
 }
+function resolveRowsNumber(text, limit){
+   if(!limit)limit = 73;
+   let rows = text.split('\n').length;
+   for(let row of text.split('\n')){
+      if(row.length > 0){
+         rows = rows + Math.floor(row.length/limit);
+      }
+   }
+   return rows;
+}
 
 function newPostLayout(){
    document.getElementById('post-content').focus();
@@ -88,10 +107,20 @@ function newPostLayout(){
 }
 
 async function loadPosts(){
+   if(loadPostsTimeout)return
+   else{
+      loadPostsTimeout = true;
+   }
+   console.log(loadPostsTimeout)
+   let highScroll = document.documentElement.scrollTop;
+   let lastPostElement = document.getElementById(lastId);
+   if(lastPostElement && lastPostElement.offsetTop - (lastPostElement.offsetHeight*7) == highScroll)return
+
    let data = await fetch(`api/posts?cant=10&lastTime=${lastPostTime}`)
    .then(response => response.json())
    .then(json => {return json});
    if(data.status != 200)return;
+   if(data.data.length == 0)return;
 
    let new_posts = document.getElementById('posts').innerHTML;
    for(let i = 0 ; i < data.data.length ; i++){
@@ -101,9 +130,9 @@ async function loadPosts(){
          author.displayName = author.displayName.slice(0, 12) + '..';
       }
       lastPostTime = post.timeStamp;
-      console.log(post);
+      lastId = post._id;
       new_posts += `
-         <div class="post" onclick="openPost(${ post._id })">
+         <div class="post" onclick="openPost(${ post._id })" id="${ post._id }">
             <div class="data">
                <img src="${ author.avatar }" alt="" class="userAvatar">
                <p class="displayName">${ author.displayName }</p>
@@ -111,10 +140,12 @@ async function loadPosts(){
                <i class="far fa-circle"></i>
                <p class="timeStap">${timeDifference(Date.now(), post.timeStamp)}</p>
             </div>
-            <textarea class="content" id="post" readonly="true" onclick="openPost(${ post._id })" rows="${ post.content.split('\n').length }">${ post.content }</textarea>
+            <textarea class="content" id="post" readonly="true" onclick="openPost(${ post._id })" rows="${ resolveRowsNumber(post.content) }">${ post.content }</textarea>
+            <div class="harth"><i class="far fa-heart"></i> ${ post.likes }</div>
          </div>
       `
    }
+   setTimeout(() => { loadPostsTimeout = false; }, 1000);
    document.getElementById('posts').innerHTML = new_posts;
 }
 
@@ -124,6 +155,9 @@ function insertPost({
    pusername,
    pavatar,
 }){
+   console.log(pdisplayName,
+      pusername,
+      pavatar);
    if(!pdisplayName) pdisplayName = displayName;
    if(!pusername) pusername = username;
    if(!pavatar) pavatar = avatar;
@@ -132,11 +166,11 @@ function insertPost({
       <div class="data">
          <img src="${ pavatar }" alt="" class="userAvatar">
          <p class="displayName">${ pdisplayName }</p>
-         <a class="username" href="/u/${ username }">@${ username }</a>
+         <a class="username" href="/u/${ pusername }">@${ pusername }</a>
          <i class="far fa-circle"></i>
          <p class="timeStap">${timeDifference(Date.now(), Date.now() - 1000)}</p>
       </div>
-      <textarea class="content" id="post" readonly="true" rows="${ content.split('\n').length }">${ content }</textarea>
+      <textarea class="content" id="post" readonly="true" rows="${ resolveRowsNumber(content) }">${ content }</textarea>
    </div>
    `
    document.getElementById('posts').innerHTML = new_post+ document.getElementById('posts').innerHTML;
@@ -147,3 +181,5 @@ function insertPost({
 
 //Initialize
 loadPosts();
+
+window.addEventListener('scroll', loadPosts)

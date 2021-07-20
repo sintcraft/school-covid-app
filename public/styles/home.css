@@ -78,7 +78,13 @@ body{
    font-family: 'Roboto', sans-serif;
    border-bottom: #ddd 1px solid;
    border-right: #ddd 1px solid;
+   background: #fff;
    padding-top: 2em;
+   transition: .3s;
+   cursor: pointer;
+}
+.post:hover{
+   background: #efefef;
 }
 .postNow {
    animation: newPost .5s;
@@ -93,7 +99,7 @@ body{
    display: inline;
    font-size: 1.2em;
    position: relative;
-   bottom: .9em;
+   bottom: 1.3em;
    left: .5em;
 }
 .post .data .username{
@@ -101,27 +107,27 @@ body{
    margin: 0;
    font-size: .9em;
    position: relative;
-   bottom: 1.25em;
+   bottom: 1.95em;
    left: 1em;
-   color: #ccc;
+   color: #bbb;
 }
 .post .data i{
    display: inline;
    margin: 0;
    font-size: .5em;
    position: relative;
-   bottom: 2.4em;
+   bottom: 3.4em;
    left: 1.8em;
-   color: #ccc;
+   color: #bbb;
 }
 .post .data .timeStap{
    display: inline;
    margin: 0;
    font-size: .9em;
    position: relative;
-   bottom: 1.2em;
+   bottom: 1.9em;
    left: 1em;
-   color: #ccc;
+   color: #bbb;
 }
 .post .content{
    position: relative;
@@ -129,9 +135,11 @@ body{
    border: none;
    text-align: left;
    left: 4em;
-   bottom: 1.2em;
+   bottom: 1.5em;
+   width: 90%;
    margin: 0;
    font-size: 1.2em;
+   background: transparent;
 }
 .post .content:focus {
    outline:none;
@@ -149,9 +157,19 @@ body{
 .loader {
    width: 7em;
    height: 7em;
+   padding: 1em;
    position: relative;
-   top: 25vh;
    left: 25%;
+   top: 30vh;
+}
+
+.loader:before {
+   content: '';
+   width: 7em;
+   height: 7em;
+   bottom: 5vh;
+   position: relative;
+   display: block;
    border-radius: 50%;
    border: #fff .3em solid;
    border-top: #0a0 .3em solid;
@@ -161,9 +179,6 @@ body{
 @keyframes loader {
    0% {
       transform: rotate(0deg) scale(1);
-   }
-   50%{
-      transform: rotate(180deg) scale(.95);
    }
    100% {
       transform: rotate(360deg) scale(1);
