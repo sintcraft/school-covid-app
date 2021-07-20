@@ -14,6 +14,7 @@ var displayName
 var logros
 var userId
 socket.on('credentials', (data) => {
+   console.log('awa')
    avatar = data.avatar;
    username = data.username;
    if(data.displayName.length > 12){
@@ -141,7 +142,7 @@ async function loadPosts(){
                <p class="timeStap">${timeDifference(Date.now(), post.timeStamp)}</p>
             </div>
             <textarea class="content" id="post" readonly="true" onclick="openPost(${ post._id })" rows="${ resolveRowsNumber(post.content) }">${ post.content }</textarea>
-            <div class="harth"><i class="far fa-heart"></i> ${ post.likes }</div>
+            <div class="harth" onclick="like(${ post._id })"><i class="far fa-heart"></i> ${ post.likes }</div>
          </div>
       `
    }

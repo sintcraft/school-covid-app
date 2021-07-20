@@ -1,0 +1,7 @@
+{
+   "production": false,
+   "ssldir": "/etc/letsencrypt/live/covidapp.ga/",
+   "mongoURI": "mongo://localhost",
+   "sessionsKey": "sessionSecret",
+   "defaultPort": 80
+}

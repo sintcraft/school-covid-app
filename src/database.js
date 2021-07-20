@@ -1,7 +1,12 @@
+const config = require('../config.json');
 const mongoose = require('mongoose');
 
 function iniciarConexion() {
-   mongoose.connect(process.env.mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+   let mongoURI = process.env.mongoURI || config.mongoURI;
+   if(!mongoURI){
+      console.log('Mongo URI not found')
+   }
+   mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
       .then(() => {
          console.log('[DB] ready');
       })

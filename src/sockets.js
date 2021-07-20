@@ -10,6 +10,7 @@ module.exports = {
             userId: socket.request.user.userId,
          });
          socket.on('post', async ({ content }) => {
+            let post = new Posts()
             if(!socket.request.user || content.length > 2000 || content.length <= 1){
                socket.emit('errorPost', { message: 'Invalid post' })
                return
