@@ -58,6 +58,7 @@ app.use('/', defaultRouter);
 app.use('/api', apiRouter);
 
 //Listen
-server.listen(process.env.PORT || config.defaultPort, () => {
-   console.log('Server is running on port 80');
+var port = process.env.PORT || config.defaultPort;
+server.listen(port, () => {
+   console.log('Server is running on port ' + port);
 });
