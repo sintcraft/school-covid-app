@@ -28,22 +28,35 @@ router.get('/login', isDontLogged, (req, res) => {
 router.use(isLogged)
 
 //Routes protected by my middleware
-
-router.get('/home', async(req, res) => {
-   if(req.user.new)return res.redirect('/new-user');
-   const posts = await Posts.find().sort({ timeStamp: "desc"})
-   res.render('pages/home', {
-      posts: posts,
-      user: req.user,
-   });
-});
-
 router.get('/new-user', async(req, res) => {
    if(!req.user.new)return res.redirect('/home');
    req.user.new = false;
    await req.user.save();
    res.render('pages/new-user');
 });
+
+router.get('/home', async(req, res) => {
+   if(req.user.new)return res.redirect('/new-user');
+   res.render('pages/home', {
+      user: req.user,
+   });
+});
+
+router.get('/populars', async(req, res) => {
+   if(req.user.new)return res.redirect('/new-user');
+   res.render('pages/populars', {
+      user: req.user,
+   });
+});
+
+router.get('/trends', async(req, res) => {
+   if(req.user.new)return res.redirect('/new-user');
+   res.render('pages/trends', {
+      user: req.user,
+   });
+});
+
+
 
 
 

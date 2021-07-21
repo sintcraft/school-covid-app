@@ -1,4 +1,5 @@
 const Posts = require('./models/post')
+const Likes = require('./models/likes')
 module.exports = {
    start: function(io, session){
       io.on('connection', async function(socket){
@@ -26,6 +27,24 @@ module.exports = {
                pavatar: socket.request.user.avatar,
                plikes: 0,
             })
+         })
+         
+         socket.on('like', async({
+            postId,
+         }) => {
+            if(!socket.request.user || !postId)return
+            let data = await Likes.findOne({ postId })
+            if(!data){
+               let like = new Likes()
+               like.postId = postId
+               like.userId = socket.request.user.userId
+               await like.save()
+               socket.broadcast.emit('newLike', {
+                  postId: postId,
+               })
+            }else{
+               data.delete()
+            }
          })
       });
    }

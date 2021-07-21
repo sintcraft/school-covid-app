@@ -22,7 +22,7 @@ if(config.production){
   }
   server = require('https').createServer(options, app);
 }else{
-   server = require('https').createServer(app);
+   server = require('http').createServer(app);
 }
 
 //Middlwares

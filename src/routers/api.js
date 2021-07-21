@@ -36,10 +36,19 @@ router.get('/posts/:id', async(req, res) => {
 
 router.get('/posts', async(req, res) => {
    let cantidad = parseInt(req.query.cantidad);
-   let lastTime = parseInt(req.query.lastTime)
+   let lastQuerry = parseInt(req.query.lastQuerry);
+   let type = req.query.type;
    if(!cantidad || isNaN(cantidad) || cantidad > 15) cantidad = 10;
-   if(!lastTime || isNaN(cantidad)) lastTime = 0;
-   let posts = await Posts.find({ timeStamp: { $lt: lastTime } }).sort({ timeStamp: 'desc' }).limit(cantidad);
+   if(!lastQuerry || isNaN(cantidad)) lastQuerry = 0;
+   if(!type) type = 'time'
+   var posts
+   if(type == 'time'){
+      posts = await Posts.find({ timeStamp: { $lt: lastQuerry } }).sort({ timeStamp: 'desc' }).limit(cantidad);
+   }else if(type == 'likes'){
+      posts = await Posts.find({ likes: { $lt: lastQuerry } }).sort({ likes: 'desc' }).limit(cantidad);
+   }else if(type == 'trends'){
+      posts = await Posts.find({ timeStamp: { $lt: lastQuerry } }).sort({ likes: 'desc' }).limit(cantidad);   
+   }
    let data = [];
    for(let i = 0 ; i < posts.length ; i++){
       let user = await User.findOne({ userId: posts[i].authorId })
