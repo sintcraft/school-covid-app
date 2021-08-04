@@ -1,3 +1,30 @@
+const socket = io('', {
+   transports: ['polling']
+});
+//global variables
+var lastPostTime = 1826660443711
+var lastId = 0;
+var loadPostsTimeout = false;
+var arraylikes = null;
+
+
+// credentians
+var avatar
+var username
+var displayName
+var logros
+var userId
+socket.on('credentials', (data) => {
+   avatar = data.avatar;
+   username = data.username;
+   if(data.displayName.length > 12){
+      displayName = data.displayName.slice(0, 12) + '..';
+   } else {
+      displayName = data.displayName;
+   }
+   logros = data.logros;
+   arraylikes = data.likes;
+});
 
 function togleProfileSubmenu(){
    let profile_Submenu = document.getElementById('profile_Submenu')
@@ -11,11 +38,26 @@ function togleProfileSubmenu(){
 function likePost(postId){
    console.log(postId)
    if(!postId)return
-   let post_liked = document.getElementById('postId')
+   let post_liked = document.getElementById('like'+postId)
+   let post_likenumber = document.getElementById('likenumber'+postId)
+   if(!post_liked ||  !post_likenumber)return
+   if(post_liked.classList.contains('liked')){
+      post_liked.classList.remove('liked')
+      post_likenumber.innerHTML = parseInt(post_likenumber.innerHTML) - 1
+   } else {
+      post_liked.classList.add('liked')
+      post_likenumber.innerHTML = parseInt(post_likenumber.innerHTML) + 1
+   }
    setTimeout(function(){
-      socket.emit('like', {
-         postId
-      })
+      if(post_liked.classList.contains('liked')){
+         socket.emit('like', {
+            postId
+         })
+      }else{
+         socket.emit('rlike', {
+            postId
+         })
+      }
    }, 2000)
 }
 

@@ -6,17 +6,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 <div class="conteiner">
-   <%- include('../components/authenticate/leftbar', {user}) %>
-   <div class="title">
-      <p>Tendencias</p>
+   <%- include('../components/authenticate/leftbar', { user, page: '' }) %>
+   <div class="data">
+      <div class="title">
+         <p>Tendencias</p>
+      </div>
+      <div id="newPost"></div>
+      <div class="" id="back" onclick="clearPostLayout()"></div>
+      <div class="posts" id="posts">
+      </div>
+      <div class="loader"></div>
    </div>
-   <div id="newPost"></div>
-   <div class="" id="back" onclick="clearPostLayout()"></div>
-   <div class="posts" id="posts">
-   </div>
-   <div class="loader"></div>
 </div>
 
 <script src="socket.io/socket.io.js"></script>
-<script src="js/trends.js"></script>
 <script src="js/mainAuthenticate.js"></script>
+<script src="js/trends.js"></script>

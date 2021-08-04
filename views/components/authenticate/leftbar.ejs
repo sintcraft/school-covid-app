@@ -1,5 +1,12 @@
 <div class="leftbar">
-   <i class="fa fa-bars simbolo-menu"></i>
+   <i class="fa fa-bars simbolo-menu" id="btn-nav"></i>
+   <div class="pmenu">
+      <%- include('profile', { user }) %>
+      <div id="profile_Submenu" class="hide">
+         <a href="/auth/logout"><i class="fas fa-sign-out-alt"></i><p>Cerrar sesion</p></a>
+         <a href="/profile"><i class="fas fa-user"></i><p>Perfil</p></a>
+      </div>
+   </div>
    <div class="parts">
       <div class="part">
          <a href="/home">
@@ -19,19 +26,14 @@
             <p>Tendencias</p>
          </a>
       </div>
-      <div class="part">
-         <div class="newpost" onclick="newPostLayout()">
-            <i class="fas fa-plus"></i>
-            <p>Nueva publicacion</p>
+      <% if(page == 'home') { %>
+         <div class="part">
+            <a class="newpost" id="newpost-btn" onclick="newPostLayout()">
+               <i class="fas fa-plus"></i>
+               <p>Nueva publicacion</p>
+            </a>
          </div>
-      </div>
-      <div class="part">
-         <%- include('profile', { user }) %>
-         <div id="profile_Submenu" class="hide">
-            <a href="/auth/logout"><i class="fas fa-sign-out-alt"></i><p>Cerrar sesion</p></a>
-            <a href="/profile"><i class="fas fa-user"></i><p>Perfil</p></a>
-         </div>
-      </div>
+      <% } %> 
    </div>
 </div>
-<div class="sint"></div>
+<div class="sintcraft"></div>
